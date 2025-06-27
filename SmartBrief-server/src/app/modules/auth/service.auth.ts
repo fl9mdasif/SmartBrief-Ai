@@ -30,7 +30,7 @@ const loginUser = async (payload: TLoginUser) => {
     _id: user?._id as string,
     username: user.username,
     email: user.email,
-    role: user.role,
+    role: (user.role === 'user' || user.role === 'admin' ? user.role : 'user') as 'user' | 'admin',
   };
 
   // create token
