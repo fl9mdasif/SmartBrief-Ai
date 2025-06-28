@@ -1,28 +1,9 @@
-// import { Types } from 'mongoose';
+import { Types } from 'mongoose';
 
-// export type TCourseLevel = 'Beginner' | 'Intermediate' | 'Advanced';
-
-// type TTag = {
-//   name: string;
-//   isDeleted: boolean;
-// };
-
-// type TCourseDetails = {
-//   level: string;
-//   description: string;
-// };
-
-// export type TCourse = {
-//   title: string;
-//   instructor: string;
-//   categoryId: Types.ObjectId;
-//   price: number;
-//   tags: TTag[];
-//   startDate: string;
-//   endDate: string;
-//   language: string;
-//   provider: string;
-//   durationInWeeks?: number;
-//   details: TCourseDetails;
-//   createdBy?: Types.ObjectId;
-// };
+export interface TSummary {
+  prompt: string;
+  summarizedContent: string;
+  wordCount: number;
+  status: 'completed' | 'failed';
+  user: Types.ObjectId; // Reference to the User who owns this summary
+}

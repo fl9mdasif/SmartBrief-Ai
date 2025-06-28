@@ -1,0 +1,32 @@
+import express from 'express';
+import { checkCredits } from '../../middlewares/checkCredits';
+import auth from '../../middlewares/auth';
+import { SummaryControllers } from './controller.summery';
+import catchAsync from '../../utils/catchAsync';
+; // Your JWT auth middleware
+
+const router = express.Router();
+
+// Route to create a new summary
+router.post(
+  '/',
+  auth('user', 'admin', 'editor', 'reviewer'), // Any logged-in user can create
+  catchAsync(checkCredits),
+  catchAsync(SummaryControllers.createSummary),
+);
+
+// Route to get a user's own summary history
+router.get(
+    '/',
+    auth('user', 'admin', 'editor', 'reviewer'), // Any logged-in user can get their history
+    SummaryControllers.getUserSummaries
+);
+
+// Route to delete a summary
+router.delete(
+    '/:id',
+    auth('user', 'admin', 'editor'), // Reviewers cannot delete
+    catchAsync(SummaryControllers.deleteSummary)
+);
+
+export const SummaryRoutes = router;

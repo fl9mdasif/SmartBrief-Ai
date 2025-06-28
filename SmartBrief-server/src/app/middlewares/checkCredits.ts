@@ -1,8 +1,8 @@
 // app/middlewares/checkCredits.ts
 import { Request, Response, NextFunction } from 'express';
-import httpStatus from 'http-status';// Adjust path to your user model // Assuming you have a custom error class
-import { User } from '../modules/user/mode.user';
+import httpStatus from 'http-status'; 
 import AppError from '../errors/AppError';
+import { User } from '../modules/auth/model.auth';
 
 export const checkCredits = async (req: Request, res: Response, next: NextFunction) => {
   try {
