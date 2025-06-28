@@ -30,7 +30,7 @@ const Login = () => {
     } catch (err) {
       // The hook's 'error' state can be used to display messages
       console.error('Failed to login:', err);
-      alert(err.data?.message || 'An error occurred during login.');
+      // alert(err.data?.message || 'An error occurred during login.');
     }
   };
 

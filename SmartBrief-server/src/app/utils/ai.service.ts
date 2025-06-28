@@ -12,7 +12,7 @@ export const generateAISummary = async (
   textToSummarize: string,
 ): Promise<string> => {
   try {
-    const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
+    const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
 
     const prompt = `Please provide a concise, professional summary of the following text:\n\n---\n${textToSummarize}\n---\n\nSummary:`;
 

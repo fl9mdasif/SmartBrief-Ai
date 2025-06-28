@@ -21,12 +21,27 @@ router.get(
     auth('user', 'admin', 'editor', 'reviewer'), // Any logged-in user can get their history
     SummaryControllers.getUserSummaries
 );
-
+router.patch(
+    '/:id',
+    auth('user', 'admin', 'editor'), // User must be logged in
+    checkCredits, // This action costs 1 credit
+    catchAsync(SummaryControllers.updateSummary)
+)
 // Route to delete a summary
 router.delete(
     '/:id',
     auth('user', 'admin', 'editor'), // Reviewers cannot delete
     catchAsync(SummaryControllers.deleteSummary)
 );
-
+router.patch(
+    '/:id/re-prompt', // New, specific path
+    auth('user', 'admin', 'editor'),
+    checkCredits, // This action costs 1 credit
+    catchAsync(SummaryControllers.repromptSummary),
+);
+router.patch(
+    '/:id/manual-edit',
+    auth('user', 'admin', 'editor'),
+    catchAsync(SummaryControllers.manualEditSummary),
+);
 export const SummaryRoutes = router;

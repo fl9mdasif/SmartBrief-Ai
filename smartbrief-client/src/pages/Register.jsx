@@ -26,7 +26,7 @@ const Register = () => {
       
       await registerUser(userData).unwrap();
 
-      alert('Registration successful! Please login to continue.');
+      // alert('Registration successful! Please login to continue.');
       navigate('/login');
     } catch (err) {
       console.error('Failed to register:', err);

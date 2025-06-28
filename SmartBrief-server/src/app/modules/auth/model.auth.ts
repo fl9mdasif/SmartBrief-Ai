@@ -37,18 +37,26 @@ const userSchema = new Schema<TUser, UserModel>(
 );
 
 // hash the password
-// hash the password
 userSchema.pre('save', async function (next) {
-  // eslint-disable-next-line @typescript-eslint/no-this-alias
+  // `this` refers to the document being saved
   const user = this;
 
-  // Store hash in your password DB.
+  // THIS IS THE FIX:
+  // Only hash the password if it has been modified (or is new)
+  if (!user.isModified('password')) {
+    return next();
+  }
 
-  user.password = await bcrypt.hash(
-    user.password,
-    Number(config.bcrypt_salt_rounds),
-  );
-  next();
+  // If the password IS modified, then proceed with hashing
+  try {
+    user.password = await bcrypt.hash(
+      user.password,
+      Number(config.bcrypt_salt_rounds),
+    );
+    next();
+  } catch (error) {
+    return next(error as Error);
+  }
 });
 
 // compare bcrypt password for auth
