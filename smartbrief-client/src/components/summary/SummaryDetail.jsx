@@ -7,6 +7,7 @@ import {
     useRePromptSummaryMutation, 
     
 } from '../../redux/features/summary/summaryApi';
+import Spinner from '../ui/Spinner';
 
 const SummaryDetail = () => {
     const dispatch = useDispatch();
@@ -94,15 +95,23 @@ const SummaryDetail = () => {
                         rows="8"
                         className="w-full flex-1 p-3 bg-slate-900 border border-slate-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"
                     />
-                    <div className="mt-2 flex justify-end">
-                        <button
-                            type="submit"
-                            className="px-4 py-2 font-bold text-white bg-purple-600 rounded-md hover:bg-purple-700 disabled:bg-slate-500 transition-colors"
-                            disabled={isReprompting}
-                        >
-                            {isReprompting ? 'Generating...' : 'Re-prompt & Use 1 Credit'}
-                        </button>
-                    </div>
+                     <div className="mt-2 flex justify-end">
+                    <button
+                        type="submit"
+                        className="px-4 py-2 font-bold text-white bg-purple-600 rounded-md hover:bg-purple-700 disabled:bg-slate-500 transition-colors flex items-center justify-center min-w-[210px]"
+                        disabled={isReprompting}
+                    >
+                        {/* THIS IS THE CHANGE: Conditional Rendering */}
+                        {isReprompting ? (
+                            <>
+                                <Spinner />
+                                <span className="ml-2">Generating...</span>
+                            </>
+                        ) : (
+                            'Re-prompt & Use 1 Credit'
+                        )}
+                    </button>
+                </div>
                 </div>
 
                <div className='flex-1 flex flex-col'>

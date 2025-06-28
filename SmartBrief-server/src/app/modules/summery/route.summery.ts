@@ -39,9 +39,5 @@ router.patch(
     checkCredits, // This action costs 1 credit
     catchAsync(SummaryControllers.repromptSummary),
 );
-router.patch(
-    '/:id/manual-edit',
-    auth('user', 'admin', 'editor'),
-    catchAsync(SummaryControllers.manualEditSummary),
-);
+
 export const SummaryRoutes = router;

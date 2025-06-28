@@ -157,45 +157,7 @@ const updateSummary = async (req: Request, res: Response, next: NextFunction) =>
     next(error);
   }
 };
-// NEW: This function handles manual edits and does NOT use a credit.
-const manualEditSummary = async (req: Request, res: Response, next: NextFunction) => {
-    try {
-        const { id } = req.params;
-        const { summarizedContent } = req.body; // It expects 'summarizedContent'
-        // @ts-ignore
-        const { _id: userId, role: userRole } = req.user;
 
-        if (summarizedContent === undefined) {
-             return res.status(httpStatus.BAD_REQUEST).json({ success: false, message: 'summarizedContent field is required.' });
-        }
-        
-        const summaryToEdit = await Summary.findById(id);
-        if (!summaryToEdit) {
-            return res.status(httpStatus.NOT_FOUND).json({ success: false, message: 'Summary not found' });
-        }
-
-        // Permission check: Owner or admin/editor can edit
-        if (summaryToEdit.user.toString() !== userId.toString() && !['admin', 'editor'].includes(userRole)) {
-            return res.status(httpStatus.FORBIDDEN).json({ success: false, message: 'You are not authorized to edit this summary.' });
-        }
-
-        const updatedSummaryData = {
-            summarizedContent: summarizedContent,
-            wordCount: countWords(summarizedContent),
-        };
-        
-        const updatedSummary = await Summary.findByIdAndUpdate(id, updatedSummaryData, { new: true });
-
-        res.status(httpStatus.OK).json({
-            success: true,
-            message: 'Summary updated manually.',
-            data: { summary: updatedSummary }, // No credit change to report
-        });
-
-    } catch (error) {
-        next(error);
-    }
-};
 const repromptSummary = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params;
@@ -235,6 +197,6 @@ export const SummaryControllers = {
   getUserSummaries,
   deleteSummary,
   updateSummary, // <-- Add this
-  manualEditSummary, // <-- Add this for manual edits
+  // manualEditSummary, // <-- Add this for manual edits
   repromptSummary, // <-- Add this for re-prompting
 };
