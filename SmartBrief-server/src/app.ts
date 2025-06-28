@@ -9,10 +9,12 @@ const app: Application = express();
 
 // parser middleware
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:5173',  
+  credentials: true,               
+}));
 
 // application routes
-// /api/v1/students/create-student
 app.use('/api/v1', router);
 
 // Root route

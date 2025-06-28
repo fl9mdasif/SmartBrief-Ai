@@ -1,8 +1,8 @@
-import { Types } from 'mongoose';
+// import { Types } from 'mongoose';
 
-export type TReview = {
-  courseId: Types.ObjectId;
-  rating: number;
-  review: string;
-  createdBy?: Types.ObjectId;
-};
+// export type TReview = {
+//   courseId: Types.ObjectId;
+//   rating: number;
+//   review: string;
+//   createdBy?: Types.ObjectId;
+// };

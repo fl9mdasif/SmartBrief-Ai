@@ -23,11 +23,12 @@ const userSchema = new Schema<TUser, UserModel>(
     role: {
       type: String,
       enum: ['user', 'admin, editor', 'reviewer'],
-      required: true,
+      // required: true,
+      default: 'user', // Default role for new users
     },
     credits: {
       type: Number,
-      required: true,
+      // required: true,
       default: 5, // New users will start with 5 credits
     },
     passwordChangedAt: { type: Date },
