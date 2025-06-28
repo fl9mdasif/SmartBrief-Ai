@@ -1,19 +1,18 @@
+ 
 import express from 'express';
-import validateRequest from '../../middlewares/validateRequest';
-import { userControllers } from '../user/controller.user';
-import { userZodValidationSchema } from '../user/validation.user';
+import validateRequest from '../../middlewares/validateRequest'; 
 import { authValidations } from './validation.auth';
 import { authControllers } from './controller.auth';
-import { USER_ROLE } from '../user/constant.user';
 import auth from '../../middlewares/auth';
+import { USER_ROLE } from './constant.auth';
 
 const router = express.Router();
 
 // register a user
 router.post(
   '/register',
-  validateRequest(userZodValidationSchema.userRegistrationValidation),
-  userControllers.registerUser,
+  validateRequest(authValidations.userRegistrationValidation),
+  authControllers.registerUser,
 );
 
 // login a user
@@ -29,4 +28,11 @@ router.post(
   validateRequest(authValidations.changePasswordValidationSchema),
   authControllers.changePassword,
 );
+
+// router.post(
+//   '/create-summary',
+//   auth('user', 'admin'), // Protects the route, only logged-in users can access
+//   checkCredits,          // Checks and decrements credits
+//   SummaryControllers.createSummary, // Your actual controller logic
+// );
 export const userRoute = router;

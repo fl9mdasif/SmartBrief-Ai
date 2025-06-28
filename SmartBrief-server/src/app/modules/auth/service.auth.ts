@@ -1,11 +1,24 @@
-import httpStatus from 'http-status';
-import { User } from '../user/mode.user';
-import { TLoginUser } from './interface.auth';
+import httpStatus from 'http-status'; 
+import { TLoginUser, TUser } from './interface.auth';
 import AppError from '../../errors/AppError';
 import config from '../../config';
 import { createToken } from './utils.auth';
 import { JwtPayload } from 'jsonwebtoken';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcrypt'; 
+import { User } from './model.auth';
+
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+ 
+const registerUser = async (payload: TUser) => {
+  // create
+  const register = await User.create(payload);
+  return register;
+};
+
+ 
+
 
 const loginUser = async (payload: TLoginUser) => {
   //
@@ -26,11 +39,13 @@ const loginUser = async (payload: TLoginUser) => {
   // console.log(user);
 
   // 3. create token and sent to the client
-  const jwtPayload = {
+  const jwtPayload:any = {
     _id: user?._id as string,
     username: user.username,
     email: user.email,
-    role: (user.role === 'user' || user.role === 'admin' ? user.role : 'user') as 'user' | 'admin',
+    role: user.role,
+    credits: user.credits,
+    passwordChangedAt: user.passwordChangedAt,
   };
 
   // create token
@@ -107,4 +122,5 @@ const changePassword = async (
 export const authServices = {
   loginUser,
   changePassword,
+  registerUser
 };

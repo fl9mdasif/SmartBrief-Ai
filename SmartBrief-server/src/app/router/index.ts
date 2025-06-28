@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { categoryRoute } from '../modules/category/route.category';
+// import { categoryRoute } from '../modules/category/route.category';
 import { courseRoute } from '../modules/course/route.course';
 import { reviewRouter } from '../modules/review/route.review';
 import { userRoute } from '../modules/auth/route.auth';
@@ -8,10 +8,10 @@ import { bestCourseRoute } from '../modules/course/route2';
 const router = Router();
 
 const moduleRoute = [
-  {
-    path: '/categories',
-    route: categoryRoute,
-  },
+  // {
+  //   path: '/categories',
+  //   route: categoryRoute,
+  // },
 
   {
     path: '/courses',

@@ -4,6 +4,23 @@ import { response } from '../../utils/sendResponse';
 import { authServices } from './service.auth';
 import config from '../../config';
 
+
+
+
+const registerUser = catchAsync(async (req, res) => {
+  //   console.log(req.body);
+
+  const result = await authServices.registerUser(req.body);
+
+  response.createSendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'User registered successfully',
+    data: result,
+  });
+});
+
+
 const loginUser = catchAsync(async (req, res) => {
   const result = await authServices.loginUser(req.body);
 
@@ -44,4 +61,5 @@ const changePassword = catchAsync(async (req, res) => {
 export const authControllers = {
   loginUser,
   changePassword,
+  registerUser
 };
