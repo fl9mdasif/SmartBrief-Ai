@@ -1,6 +1,5 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
-import config from '../config'; 
-// Initialize the Generative AI client
+import config from '../config';  
 const genAI = new GoogleGenerativeAI(config.gemini_api_key as string);
 
 /**

@@ -12,7 +12,7 @@ export interface TUser {
   email: string;
   password: string;
   role: 'user' | 'admin' |'editor'| 'reviewer';
-  passwordChangedAt?: Date;
+  // passwordChangedAt?: Date;
   credits: number; // Add this line
 }
 export type TUserRole = keyof typeof USER_ROLE;
@@ -28,10 +28,10 @@ export interface UserModel extends Model<TUser> {
     // eslint-disable-next-line no-unused-vars
     hashedPassword: string,
   ): Promise<boolean>;
-  isJWTIssuedBeforePasswordChanged(
-    // eslint-disable-next-line no-unused-vars
-    passwordChangedTimestamp: Date,
-    // eslint-disable-next-line no-unused-vars
-    jwtIssuedTimestamp: number,
-  ): boolean;
+  // isJWTIssuedBeforePasswordChanged(
+  //   // eslint-disable-next-line no-unused-vars
+  //   passwordChangedTimestamp: Date,
+  //   // eslint-disable-next-line no-unused-vars
+  //   jwtIssuedTimestamp: number,
+  // ): boolean;
 }

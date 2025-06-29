@@ -31,7 +31,7 @@ const userSchema = new Schema<TUser, UserModel>(
       // required: true,
       default: 5, // New users will start with 5 credits
     },
-    passwordChangedAt: { type: Date },
+    // passwordChangedAt: { type: Date },
   },
   { timestamps: true },
 );
@@ -71,7 +71,7 @@ userSchema.statics.isPasswordMatched = async function (
 userSchema.set('toJSON', {
   transform: function (doc, ret) {
     delete ret.password;
-    delete ret.passwordChangedAt;
+    // delete ret.passwordChangedAt;
     delete ret.__v;
   },
 });
@@ -80,17 +80,6 @@ userSchema.set('toJSON', {
 // find user exists
 userSchema.statics.isUserExists = async function (name: string) {
   return await User.findOne({ username: name });
-};
-
-// jwt password time checking
-userSchema.statics.isJWTIssuedBeforePasswordChanged = function (
-  passwordChangedTimestamp: Date,
-  jwtIssuedTimestamp: number,
-) {
-  // console.log(passwordChangedTimestamp, jwtIssuedTimestamp);
-  const passwordChangedTime =
-    new Date(passwordChangedTimestamp).getTime() / 1000;
-  return passwordChangedTime > jwtIssuedTimestamp;
 };
 
 export const User = model<TUser, UserModel>('User', userSchema);

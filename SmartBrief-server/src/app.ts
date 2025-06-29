@@ -1,7 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import cors from 'cors';
-import globalErrorHandler from './app/middlewares/globalErrorHandler';
-import notFound from './app/middlewares/notFound';
 import express, { Application, Request, Response } from 'express';
 import router from './app/router';
 
@@ -31,6 +29,6 @@ app.get('/a', test);
  
 
 // global err handler middleware. must declare it in the last off the file
-app.use(globalErrorHandler);
+// app.use(globalErrorHandler);
 
 export default app;
