@@ -6,9 +6,7 @@ export const summaryApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
  
     getSummaries: builder.query({
-      query: () => '/summaries',
-      // Provides a 'Summaries' tag to the cached data.
-      // This allows us to automatically refetch this data later.
+      query: () => '/summaries', 
       providesTags: ['Summaries'],
     }),
 

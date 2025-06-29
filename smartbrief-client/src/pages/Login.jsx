@@ -2,8 +2,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { useNavigate, Link } from 'react-router-dom';
-// import { useLoginMutation } from '../features/auth/authApi';
+import { useNavigate, Link } from 'react-router-dom'; 
 import { setUser } from '../redux/features/auth/authSlice';
 import { useLoginMutation } from '../redux/features/auth/authApi';
 
@@ -18,9 +17,7 @@ const Login = () => {
   const onSubmit = async (data) => {
     try {
       const result = await login(data).unwrap();
-      
-      // The backend response should have a 'data' field containing user and token
-      // e.g., { success: true, data: { user: {...}, token: "..." } }
+       
       const { user, token } = result.data;
       
       if (token) {

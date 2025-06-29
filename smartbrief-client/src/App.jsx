@@ -14,8 +14,7 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-
-       {/* Protected Routes - Each is now a full page */}
+ 
         <Route 
           path="/" 
           element={
