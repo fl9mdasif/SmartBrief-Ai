@@ -54,21 +54,21 @@ const createSummary = async (req: Request, res: Response, next: NextFunction) =>
 };
 
 // 2. Get all summaries for the logged-in user
-const getUserSummaries = async (req: Request, res: Response, next: NextFunction) => {
-    try {
-        // @ts-ignore
-        const userId = req.user._id;
-        const summaries = await Summary.find({ user: userId }).sort({ createdAt: -1 });
+// const getUserSummaries = async (req: Request, res: Response, next: NextFunction) => {
+//     try {
+//         // @ts-ignore
+//         const userId = req.user._id;
+//         const summaries = await Summary.find({ user: userId }).sort({ createdAt: -1 });
 
-        res.status(httpStatus.OK).json({
-            success: true,
-            message: 'Summaries retrieved successfully!',
-            data: summaries,
-        });
-    } catch (error) {
-        next(error);
-    }
-};
+//         res.status(httpStatus.OK).json({
+//             success: true,
+//             message: 'Summaries retrieved successfully!',
+//             data: summaries,
+//         });
+//     } catch (error) {
+//         next(error);
+//     }
+// };
 
 
 // 3. Delete a summary
@@ -190,6 +190,38 @@ const repromptSummary = async (req: Request, res: Response, next: NextFunction) 
   }
 };
 
+// ... other functions ...
+
+const getUserSummaries = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        // @ts-ignore
+        const { _id: userId, role } = req.user;
+
+        let query = {};
+
+        // If the user's role is 'user', they only see their own summaries.
+        // Otherwise, admins, editors, and reviewers see everything.
+        if (role === 'user') {
+            query = { user: userId };
+        }
+
+        const summaries = await Summary.find(query)
+            .populate('user', 'username') // Optional: include username in the response
+            .sort({ createdAt: -1 });
+
+        res.status(httpStatus.OK).json({
+            success: true,
+            message: 'Summaries retrieved successfully!',
+            data: summaries,
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+// ... other controller functions ...
+// The permission logic in your delete and update controllers should already handle
+// checking if a user owns the summary OR if they are an admin/editor. That logic is correct.
 
 // Don't forget to export it!
 export const SummaryControllers = {

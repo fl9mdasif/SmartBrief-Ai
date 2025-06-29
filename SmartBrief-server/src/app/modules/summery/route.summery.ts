@@ -23,19 +23,19 @@ router.get(
 );
 router.patch(
     '/:id',
-    auth('user', 'admin', 'editor'), // User must be logged in
+    auth( 'admin', 'editor'), // User must be logged in
     checkCredits, // This action costs 1 credit
     catchAsync(SummaryControllers.updateSummary)
 )
 // Route to delete a summary
 router.delete(
     '/:id',
-    auth('user', 'admin', 'editor'), // Reviewers cannot delete
+    auth('admin', 'editor'), // Reviewers cannot delete
     catchAsync(SummaryControllers.deleteSummary)
 );
 router.patch(
     '/:id/re-prompt', // New, specific path
-    auth('user', 'admin', 'editor'),
+    auth( 'admin', 'editor'),
     checkCredits, // This action costs 1 credit
     catchAsync(SummaryControllers.repromptSummary),
 );

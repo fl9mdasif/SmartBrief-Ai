@@ -30,7 +30,7 @@ const test = async (req: Request, res: Response) => {
 app.get('/a', test);
 // not found middleware with http-status
 
-app.use(notFound)
+// app.use('*',notFound)
 
 
 
