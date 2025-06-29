@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';  
+import { Link, useNavigate } from 'react-router-dom';  
 import { useGetSummariesQuery } from '../../redux/features/summary/summaryApi';
 import { setSelectedSummary } from '../../redux/features/summary/summarySlice'; 
 
@@ -11,14 +11,18 @@ const Sidebar = () => {
     const { data: summaries, isLoading } = useGetSummariesQuery();
     const { selectedSummaryId } = useSelector((state) => state.summary);
     const { user } = useSelector((state) => state.auth); 
+    const navigate = useNavigate();
 
-    const handleSelectSummary = (summary) => {
-        dispatch(setSelectedSummary (summary));
+   const handleSelectSummary = (summary) => {
+        dispatch(setSelectedSummary(summary));
+        navigate('/'); // 3. Navigate to the dashboard route
     };
     
     const handleNewSummary = () => {
         dispatch(setSelectedSummary(null));
+        navigate('/'); // 3. Navigate to the dashboard route
     };
+
 
     // This logic is correct, we'll now use it in the JSX
     const historyTitle = 

@@ -18,5 +18,11 @@ router.patch(
     auth('admin'),
     catchAsync(AdminControllers.rechargeUserCredits)
 );
+// Change user role - ONLY ADMINS
+router.patch(
+    '/users/change-role',
+    auth('admin'),
+    catchAsync(AdminControllers.changeUserRole)
+);
 
 export const AdminRoutes = router;

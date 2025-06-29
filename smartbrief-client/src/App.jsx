@@ -6,6 +6,7 @@ import Dashboard from './pages/Dashboard';
 import ProtectedRoute from './components/routes/ProtectedRoute';
 import AdminRoute from './components/routes/AdminRoutes';
 import UserManagement from './pages/UserManagement';
+import AppLayout from './components/layout/AppLayout';
 
 function App() {
   return (
@@ -13,6 +14,8 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+
+       {/* Protected Routes - Each is now a full page */}
         <Route 
           path="/" 
           element={
@@ -21,6 +24,8 @@ function App() {
             </ProtectedRoute>
           } 
         />
+
+        
         <Route 
           path="/admin/user-management" 
           element={

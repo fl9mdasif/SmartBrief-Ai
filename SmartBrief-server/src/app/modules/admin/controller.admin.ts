@@ -50,7 +50,49 @@ const rechargeUserCredits = async (req: Request, res: Response, next: NextFuncti
     }
 };
 
+// 3. Change a user's role
+const changeUserRole = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const { userId, role } = req.body;
+        const allowedRoles = ['user', 'admin', 'editor', 'reviewer'];
+
+        // --- Validation ---
+        if (!userId || !role) {
+            return res.status(httpStatus.BAD_REQUEST).json({ success: false, message: 'userId and role are required.' });
+        }
+        if (!allowedRoles.includes(role)) {
+            return res.status(httpStatus.BAD_REQUEST).json({ success: false, message: 'Invalid role specified.' });
+        }
+
+        // --- Security: Prevent an admin from changing their own role or another admin's role ---
+        const userToUpdate = await User.findById(userId);
+        if (userToUpdate && userToUpdate.role === 'admin') {
+             return res.status(httpStatus.FORBIDDEN).json({ success: false, message: 'Admin roles cannot be changed from this panel.' });
+        }
+
+        const updatedUser = await User.findByIdAndUpdate(
+            userId,
+            { role: role }, // Set the new role
+            { new: true, select: '-password' }
+        );
+
+        if (!updatedUser) {
+            return res.status(httpStatus.NOT_FOUND).json({ success: false, message: 'User not found.' });
+        }
+
+        res.status(httpStatus.OK).json({
+            success: true,
+            message: `${updatedUser.username}'s role has been updated to ${updatedUser.role}.`,
+            data: updatedUser,
+        });
+
+    } catch (error) {
+        next(error);
+    }
+};
+
 export const AdminControllers = {
     getAllUsers,
     rechargeUserCredits,
+    changeUserRole
 };
