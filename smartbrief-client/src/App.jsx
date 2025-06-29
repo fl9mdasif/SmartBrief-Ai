@@ -4,6 +4,8 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import ProtectedRoute from './components/routes/ProtectedRoute';
+import AdminRoute from './components/routes/AdminRoutes';
+import UserManagement from './pages/UserManagement';
 
 function App() {
   return (
@@ -17,6 +19,14 @@ function App() {
             <ProtectedRoute>
               <Dashboard />
             </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/admin/user-management" 
+          element={
+            <AdminRoute>
+              <UserManagement/>
+            </AdminRoute>
           } 
         />
       </Routes>
